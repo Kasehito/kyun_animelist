@@ -6,7 +6,6 @@ class AnimeController extends GetxController {
   final ApiService _apiService = Get.put(ApiService());
   int page = 1;
   var isLoading = true.obs;
-  final int _limit = 15;
   var animeList = <AnimeModel>[].obs;
 
   @override
@@ -17,11 +16,7 @@ class AnimeController extends GetxController {
 
   Future<void> getAnime() async {
     try {
-      isLoading.value = true;
-      var response = await _apiService.fetchAnime(page, _limit);
-      if (response.length < _limit) {
-        isLoading.value = false;
-      }
+      List<AnimeModel> response = await _apiService.fetchTopAnime(page);
       animeList.addAll(response);
       page++;
     } catch (e) {
@@ -31,8 +26,7 @@ class AnimeController extends GetxController {
     }
   }
 
-  @override
-  Future refresh() async {
+  Future refreshData() async {
     page = 1;
     isLoading.value = true;
     animeList.clear();
