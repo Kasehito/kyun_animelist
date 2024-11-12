@@ -19,15 +19,27 @@ class ApiService extends GetConnect {
     throw Exception('Failed to load anime ${response.statusCode}');
   }
 
-  Future<List<AnimeModel>> fetchRecommendAnime(
-    int page,
-  ) async {
-    final response = await http.get(Uri.parse('$baseUrl/recommendations/anime?page=$page'));
+  // Future<List<AnimeModel>> fetchRecommendAnime(
+  //   int page,
+  // ) async {
+  //   final response = await http.get(Uri.parse('$baseUrl/recommendations/anime?page=$page'));
+  //   if (response.statusCode == 200) {
+  //     final Map<String, dynamic> data = json.decode(response.body);
+  //     final List<dynamic> recommendAnimeData = data['data'];
+  //     return recommendAnimeData.map((item) => AnimeModel.fromJson(item)).toList();
+  //   }
+  //   throw Exception('Failed to load anime ${response.statusCode}');
+  // }
+
+  Future<List<AnimeModel>> searchAnime(String query) async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/anime?q=${Uri.encodeComponent(query)}'));
+
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final List<dynamic> recommendAnimeData = data['data'];
-      return recommendAnimeData.map((item) => AnimeModel.fromJson(item)).toList();
+      final List<dynamic> searchResults = data['data'];
+      return searchResults.map((item) => AnimeModel.fromJson(item)).toList();
     }
-    throw Exception('Failed to load anime ${response.statusCode}');
+    throw Exception('Failed to search anime ${response.statusCode}');
   }
 }

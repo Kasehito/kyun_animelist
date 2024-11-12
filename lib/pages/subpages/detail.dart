@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/anime_model.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatelessWidget {   
   const Detail({super.key, required this.anime});
 
   final AnimeModel anime;

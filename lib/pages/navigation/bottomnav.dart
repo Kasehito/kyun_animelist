@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/bottom_nav_controller.dart';
-import 'home.dart';
-import 'search.dart';
-import 'profile.dart';
-import 'season.dart';
-import 'mylist.dart';
+import '../../controllers/bottom_nav_controller.dart';
+import '../home.dart';
+import '../search.dart';
+import '../profile.dart';
+import '../season.dart';
+import '../mylist.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key});
@@ -17,7 +17,7 @@ class BottomNav extends StatelessWidget {
     final menus = [
       const Home(),
       const MyList(),
-      const Search(),
+      Search(),
       const Season(),
       const Profile(),
     ];
@@ -29,19 +29,29 @@ class BottomNav extends StatelessWidget {
               elevation: 0,
               backgroundColor: Colors.white,
               title: const Text(
-                'Anime List',
+                'KyunAnimeList',
                 style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.search, color: Colors.black87),
-                  onPressed: () {
-                    controller.changeIndex(2);
-                  },
-                ),
+                Obx(() {
+                  // Cek apakah halaman saat ini adalah Search
+                  final isSearchPage = Get.currentRoute == '/search' ||
+                      controller.selectedIndex.value ==
+                          2; // Jika Search ada di index 2
+
+                  return isSearchPage
+                      ? const SizedBox() // Jika di Search page, tampilkan widget kosong
+                      : IconButton(
+                          icon: const Icon(Icons.search, color: Colors.black87),
+                          onPressed: () {
+                            controller
+                                .changeIndex(2); // Navigate ke Search page
+                          },
+                        );
+                }),
               ],
             ),
             body: Center(

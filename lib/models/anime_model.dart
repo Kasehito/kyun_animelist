@@ -3,7 +3,8 @@ import 'image_model.dart';
 class AnimeModel {
   String title;
   Map<String, ImageModel> images;
-  int rank;
+  int? rank;
+  bool? airing;
   String? synopsis;
   String? rating;
   String? duration;
@@ -16,20 +17,21 @@ class AnimeModel {
   AnimeModel({
     required this.title,
     required this.images,
-    required this.rank,
-    required this.synopsis,
-    required this.rating,
-    required this.duration,
+    this.rank,
+    this.synopsis,
+    this.rating,
+    this.duration,
+    this.airing,
     required this.genre,
-    required this.score,
+    this.score,
     required this.type,
-    required this.status,
-    required this.episode,
+    this.status,
+    this.episode,
   });
 
   factory AnimeModel.fromJson(Map<String, dynamic> json) {
     return AnimeModel(
-      rank: int.parse(json['rank'].toString()),
+      rank: json['rank'] != null ? int.tryParse(json['rank'].toString()) : null,
       genre: (json['genres'] as List)
           .map((genre) => genre['name'].toString())
           .toList(),
@@ -38,13 +40,14 @@ class AnimeModel {
         'jpg': ImageModel.fromJson(json['images']['jpg']),
         'webp': ImageModel.fromJson(json['images']['webp']),
       },
-      synopsis: json['synopsis'].toString(),
-      duration: json['duration'].toString(),
-      rating: json['rating'].toString(),
+      synopsis: json['synopsis']?.toString(),
+      duration: json['duration']?.toString(),
+      airing: json['airing'] ?? false,
+      rating: json['rating']?.toString(),
       type: json['type'].toString(),
-      status: json['status'].toString(),
-      episode: json['episodes'].toString(),
-      score: json['score'].toString(),
+      status: json['status']?.toString(),
+      episode: json['episodes']?.toString(),
+      score: json['score']?.toString(),
     );
   }
 }

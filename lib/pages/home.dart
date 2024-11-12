@@ -1,118 +1,21 @@
 import 'package:flutter/material.dart';
 import '../component/my_top_list.dart';
+import '../pages/navigation/tabnav.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey[200]!,
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: TabBar(
-                isScrollable: true,
-                indicator: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey[300]!,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.blue[600],
-                ),
-                labelPadding: const EdgeInsets.symmetric(horizontal: 4),
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                tabAlignment: TabAlignment.start,
-                labelStyle: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-                unselectedLabelStyle: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.grey[800],
-                dividerColor: Colors.transparent,
-                tabs: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text('Top Anime'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text('Airing'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text('Upcoming'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text('Popular'),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  MyTopList(),
-                  _buildComingSoonTab('Airing Anime'),
-                  _buildComingSoonTab('Upcoming Anime'),
-                  _buildComingSoonTab('Popular Anime'),
-                ],
-              ),
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: TabNav(
+        tabs: const ['Top Anime', 'Airing', 'Upcoming', 'Popular'],
+        views: [
+          const MyTopList(),
+          _buildComingSoonTab('Airing Anime'),
+          _buildComingSoonTab('Upcoming Anime'),
+          _buildComingSoonTab('Popular Anime'),
+        ],
       ),
     );
   }
@@ -123,7 +26,7 @@ class Home extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.calendar_month,
+            Icons.watch_later_outlined,
             size: 64,
             color: Colors.grey[400],
           ),
