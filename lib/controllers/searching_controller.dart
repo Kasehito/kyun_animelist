@@ -32,10 +32,8 @@ class SearchingController extends GetxController {
     });
   }
 
-  @override
-  void onClose() {
-    searchController.dispose();
-    _debounceTimer?.cancel();
-    super.onClose();
+  void clearSearch() {
+    searchController.clear();
+    searchResults.clear();
   }
 }

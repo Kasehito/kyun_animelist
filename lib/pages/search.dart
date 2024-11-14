@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kyun_animelist/component/my_card.dart';
+import 'package:kyun_animelist/component/my_anime_card.dart';
+import 'package:kyun_animelist/pages/search-page/my_genre_list.dart';
 import '../component/my_searchfield.dart';
 import '../controllers/searching_controller.dart';
+import '../controllers/genre_controller.dart';
 
 import '../pages/subpages/detail.dart';
 
 class Search extends StatelessWidget {
   Search({super.key});
   final SearchingController controller = Get.put(SearchingController());
+  final GenreController genreController = Get.put(GenreController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class Search extends StatelessWidget {
                 icon: Icons.search,
                 controller: controller.searchController,
                 onChanged: controller.searchAnime,
+                onClear: controller.clearSearch,
                 autofocus: true,
               ),
             ),
@@ -33,9 +37,7 @@ class Search extends StatelessWidget {
                 }
 
                 if (controller.searchResults.isEmpty) {
-                  return const Center(
-                    child: Text('No results found'),
-                  );
+                  return const MyGenreList();
                 }
 
                 return ListView.builder(
@@ -45,11 +47,11 @@ class Search extends StatelessWidget {
                     final anime = controller.searchResults[index];
                     return AnimeCard(
                       imageUrl: anime.images['jpg']?.largeImageUrl ?? '',
-                      score: anime.score ?? 'N/A',
+                      score: anime.score?.toString() ?? 'N/A',
                       title: anime.title,
-                      genres: anime.genre,
+                      genres: anime.genres,
                       showRank: false,
-                      episode: anime.episode ?? '',
+                      episode: anime.episodes ?? '',
                       type: anime.type,
                       onTap: () => Get.to(() => Detail(anime: anime)),
                     );

@@ -19,18 +19,6 @@ class ApiService extends GetConnect {
     throw Exception('Failed to load anime ${response.statusCode}');
   }
 
-  // Future<List<AnimeModel>> fetchRecommendAnime(
-  //   int page,
-  // ) async {
-  //   final response = await http.get(Uri.parse('$baseUrl/recommendations/anime?page=$page'));
-  //   if (response.statusCode == 200) {
-  //     final Map<String, dynamic> data = json.decode(response.body);
-  //     final List<dynamic> recommendAnimeData = data['data'];
-  //     return recommendAnimeData.map((item) => AnimeModel.fromJson(item)).toList();
-  //   }
-  //   throw Exception('Failed to load anime ${response.statusCode}');
-  // }
-
   Future<List<AnimeModel>> searchAnime(String query) async {
     final response = await http
         .get(Uri.parse('$baseUrl/anime?q=${Uri.encodeComponent(query)}'));
@@ -41,5 +29,28 @@ class ApiService extends GetConnect {
       return searchResults.map((item) => AnimeModel.fromJson(item)).toList();
     }
     throw Exception('Failed to search anime ${response.statusCode}');
+  }
+
+  Future<List<AnimeModel>> fetchAnimeByGenre(int genreId, int page) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/anime?genres=$genreId&page=$page')
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final List<dynamic> animeData = data['data'];
+      return animeData.map((item) => AnimeModel.fromJson(item)).toList();
+    }
+    throw Exception('Failed to load anime by genre ${response.statusCode}');
+  }
+
+  Future<List<Map<String, dynamic>>> fetchGenres() async {
+    final response = await http.get(Uri.parse('$baseUrl/genres/anime'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return List<Map<String, dynamic>>.from(data['data']);
+    }
+    throw Exception('Failed to load genres ${response.statusCode}');
   }
 }

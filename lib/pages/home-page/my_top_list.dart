@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kyun_animelist/component/my_anime_card.dart';
 import '../../controllers/anime_controller.dart';
-import '../../pages/subpages/detail.dart';  
+import '../subpages/detail.dart';
 
 class MyTopList extends StatelessWidget {
   const MyTopList({super.key});

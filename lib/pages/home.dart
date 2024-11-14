@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../component/my_top_list.dart';
+import 'home-page/my_top_list.dart';
 import '../pages/navigation/tabnav.dart';
 
 class Home extends StatelessWidget {

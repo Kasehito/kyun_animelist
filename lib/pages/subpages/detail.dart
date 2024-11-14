@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/anime_model.dart';
 
-class Detail extends StatelessWidget {   
+class Detail extends StatelessWidget {
   const Detail({super.key, required this.anime});
 
   final AnimeModel anime;
@@ -81,7 +81,7 @@ class Detail extends StatelessWidget {
                           Icon(Icons.star, color: Colors.amber[400], size: 20),
                           const SizedBox(width: 4),
                           Text(
-                            anime.score ?? 'N/A',
+                            anime.score?.toString() ?? 'N/A',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -91,7 +91,7 @@ class Detail extends StatelessWidget {
                           Icon(Icons.movie, color: Colors.blue[200], size: 20),
                           const SizedBox(width: 4),
                           Text(
-                            '${anime.episode ?? 'N/A'} Episodes',
+                            '${anime.episodes ?? 'N/A'} Episodes',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -111,7 +111,7 @@ class Detail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Info Cards
+                  // Info Cards Row 1
                   Row(
                     children: [
                       _buildInfoCard(
@@ -127,68 +127,249 @@ class Detail extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 12),
+
+                  // Info Cards Row 2
+                  Row(
+                    children: [
+                      _buildInfoCard(
+                        icon: Icons.calendar_today,
+                        label: 'Year',
+                        value: anime.year?.toString() ?? 'Unknown',
+                      ),
+                      const SizedBox(width: 12),
+                      _buildInfoCard(
+                        icon: Icons.remove_red_eye,
+                        label: 'Rating',
+                        value: anime.rating ?? 'Unknown',
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 24),
 
-                  // Synopsis
-                  const Text(
-                    'Synopsis',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    anime.synopsis ?? 'No synopsis available',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[800],
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Genres
-                  if (anime.genre.isNotEmpty) ...[
-                    const Text(
-                      'Genres',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  // Alternative Titles
+                  if (anime.titleEnglish != null ||
+                      anime.titleJapanese != null) ...[
+                    _buildSectionTitle('Alternative Titles'),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[50],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (anime.titleEnglish != null)
+                            _buildTitleInfo('English', anime.titleEnglish!),
+                          if (anime.titleJapanese != null) ...[
+                            if (anime.titleEnglish != null)
+                              const SizedBox(height: 8),
+                            _buildTitleInfo('Japanese', anime.titleJapanese!),
+                          ],
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: anime.genre
-                          .map(
-                            (genre) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.blue[50],
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.blue[200]!),
-                              ),
-                              child: Text(
-                                genre,
-                                style: TextStyle(color: Colors.blue[800]),
-                              ),
-                            ),
-                          )
-                          .toList(),
+                    const SizedBox(height: 24),
+                  ],
+
+                  // Synopsis
+                  _buildSectionTitle('Synopsis'),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                    child: Text(
+                      anime.synopsis ?? 'No synopsis available',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[800],
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Information
+                  _buildSectionTitle('Information'),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildInfoRow('Type', anime.type),
+                        _buildInfoRow('Episodes', anime.episodes ?? 'Unknown'),
+                        _buildInfoRow('Status', anime.status ?? 'Unknown'),
+                        _buildInfoRow(
+                            'Aired',
+                            anime.airing == true
+                                ? 'Currently Airing'
+                                : 'Finished'),
+                        if (anime.duration != null)
+                          _buildInfoRow('Duration', anime.duration!),
+                        if (anime.rating != null)
+                          _buildInfoRow('Rating', anime.rating!),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Studios & Producers
+                  if (anime.studios != null || anime.producers != null) ...[
+                    _buildSectionTitle('Studios & Producers'),
+                    const SizedBox(height: 8),
+                    if (anime.studios != null && anime.studios!.isNotEmpty)
+                      _buildChipsSection(
+                          'Studios', anime.studios!, Colors.purple),
+                    if (anime.producers != null &&
+                        anime.producers!.isNotEmpty) ...[
+                      if (anime.studios != null) const SizedBox(height: 12),
+                      _buildChipsSection(
+                          'Producers', anime.producers!, Colors.teal),
+                    ],
+                    const SizedBox(height: 24),
+                  ],
+
+                  // Genres
+                  if (anime.genres.isNotEmpty) ...[
+                    _buildSectionTitle('Genres'),
+                    const SizedBox(height: 8),
+                    _buildChipsSection('', anime.genres, Colors.blue,
+                        showLabel: false),
                   ],
                   const SizedBox(height: 24),
+
+                  // Themes
+                  if (anime.themes != null && anime.themes!.isNotEmpty) ...[
+                    _buildSectionTitle('Themes'),
+                    const SizedBox(height: 8),
+                    _buildChipsSection('', anime.themes!, Colors.orange,
+                        showLabel: false),
+                    const SizedBox(height: 24),
+                  ],
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildTitleInfo(String language, String title) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 80,
+          child: Text(
+            language,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChipsSection(
+      String label, List<String> items, MaterialColor color,
+      {bool showLabel = true}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (showLabel && label.isNotEmpty) ...[
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: items
+              .map((item) => Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color[50],
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: color[200]!),
+                    ),
+                    child: Text(
+                      item,
+                      style: TextStyle(color: color[800]),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ],
     );
   }
 
