@@ -1,46 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../controllers/anime_controller.dart';
+import 'home-page/my_top_list.dart';
+import '../pages/navigation/tabnav.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AnimeController animeController = Get.put(AnimeController());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Anime List'),
+      body: TabNav(
+        tabs: const ['Top Anime', 'Airing', 'Upcoming', 'Popular'],
+        views: [
+          const MyTopList(),
+          _buildComingSoonTab('Airing Anime'),
+          _buildComingSoonTab('Upcoming Anime'),
+          _buildComingSoonTab('Popular Anime'),
+        ],
       ),
-      body: Obx(() {
-        if (animeController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (animeController.animeList.isEmpty) {
-          return const Center(child: Text('No data'));
-        }
+    );
+  }
 
-        return ListView.builder(
-          itemCount: animeController.animeList.length,
-          itemBuilder: (context, index) {
-            final anime = animeController.animeList[index];
-
-            return Card(
-              child: ListTile(
-                leading: Image.network(
-                  anime.image,
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                title: Text(anime.title),
-                subtitle:
-                    Text('Score: ${anime.score} • Episodes: ${anime.episode}'),
-              ),
-            );
-          },
-        );
-      }),
+  Widget _buildComingSoonTab(String title) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.watch_later_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Coming Soon',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[400],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
