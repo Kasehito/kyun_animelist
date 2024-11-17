@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class ApiService extends GetConnect {
   @override
   final String baseUrl = 'https://api.jikan.moe/v4';
+  final String authBaseUrl = 'https://mediadwi.com/api/latihan';
 
   Future<List<AnimeModel>> fetchTopAnime(
     int page,
@@ -52,5 +53,27 @@ class ApiService extends GetConnect {
       return List<Map<String, dynamic>>.from(data['data']);
     }
     throw Exception('Failed to load genres ${response.statusCode}');
+  }
+
+  Future<Map<String, dynamic>> registerUser({
+    required String username,
+    required String password,
+    required String fullName,
+    required String email,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$authBaseUrl/register-user'),
+      body: {
+        'username': username,
+        'password': password,
+        'full_name': fullName,
+        'email': email,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    throw Exception('Failed to register user ${response.statusCode}');
   }
 }
