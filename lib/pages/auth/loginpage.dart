@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/login_controller.dart';
 import 'signuppage.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final LoginController controller = Get.put(LoginController());
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,6 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            // Welcome Text
             const Text(
               'Welcome Back!',
               style: TextStyle(
@@ -31,16 +35,16 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            // Login Form
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  // Email Field
+                  // Username Field
                   TextField(
+                    controller: usernameController,
                     decoration: InputDecoration(
-                      hintText: 'Email',
-                      prefixIcon: const Icon(Icons.email_outlined),
+                      hintText: 'Username',
+                      prefixIcon: const Icon(Icons.person_outline),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -53,6 +57,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   // Password Field
                   TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -77,27 +82,37 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   // Login Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                  Obx(() => SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () {
+                                  controller.loginUser(
+                                    username: usernameController.text,
+                                    password: passwordController.text,
+                                  );
+                                },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white)
+                              : const Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
-                      ),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                      )),
                   const SizedBox(height: 20),
                   // Sign Up Link
                   Row(
@@ -108,7 +123,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(() => const SignUpPage()),
+                        onTap: () => Get.to(() => SignUpPage()),
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(

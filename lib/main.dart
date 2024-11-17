@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/login',
       getPages: [
         GetPage(name: '/bottomnav', page: () => const BottomNav()),
-        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/signup', page: () => SignUpPage()),
       ],
     );

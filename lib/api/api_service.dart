@@ -61,8 +61,11 @@ class ApiService extends GetConnect {
     required String fullName,
     required String email,
   }) async {
+    final Uri url = Uri.parse('$authBaseUrl/register-user');
+    
+    // Menggunakan POST method dengan form data
     final response = await http.post(
-      Uri.parse('$authBaseUrl/register-user'),
+      url,
       body: {
         'username': username,
         'password': password,
@@ -75,5 +78,25 @@ class ApiService extends GetConnect {
       return json.decode(response.body);
     }
     throw Exception('Failed to register user ${response.statusCode}');
+  }
+
+  Future<Map<String, dynamic>> loginUser({
+    required String username,
+    required String password,
+  }) async {
+    final Uri url = Uri.parse('$authBaseUrl/login');
+    
+    final response = await http.post(
+      url,
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    throw Exception('Failed to login ${response.statusCode}');
   }
 }

@@ -19,12 +19,7 @@ class SignUpPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 50),
-            Image.asset(
-              'assets/images/signup_illustration.png',
-              height: 180,
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             const Text(
               'Create Account',
               style: TextStyle(
@@ -154,7 +149,7 @@ class SignUpPage extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(() => const LoginPage()),
+                        onTap: () => Get.to(() => LoginPage()),
                         child: const Text(
                           'Login',
                           style: TextStyle(
