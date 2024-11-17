@@ -14,10 +14,8 @@ class Detail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hero Image Section
             Stack(
               children: [
-                // Image
                 Container(
                   height: 400,
                   width: double.infinity,
@@ -29,7 +27,6 @@ class Detail extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // Gradient overlay
                   foregroundDecoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -43,7 +40,6 @@ class Detail extends StatelessWidget {
                   ),
                 ),
 
-                // Back Button
                 Positioned(
                   top: 40,
                   left: 16,
@@ -59,7 +55,6 @@ class Detail extends StatelessWidget {
                   ),
                 ),
 
-                // Title at bottom
                 Positioned(
                   bottom: 20,
                   left: 16,
@@ -105,13 +100,11 @@ class Detail extends StatelessWidget {
               ],
             ),
 
-            // Content Section
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Info Cards Row 1
                   Row(
                     children: [
                       _buildInfoCard(
@@ -129,7 +122,6 @@ class Detail extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Info Cards Row 2
                   Row(
                     children: [
                       _buildInfoCard(
@@ -147,7 +139,6 @@ class Detail extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Alternative Titles
                   if (anime.titleEnglish != null ||
                       anime.titleJapanese != null) ...[
                     _buildSectionTitle('Alternative Titles'),
@@ -174,7 +165,6 @@ class Detail extends StatelessWidget {
                     const SizedBox(height: 24),
                   ],
 
-                  // Synopsis
                   _buildSectionTitle('Synopsis'),
                   const SizedBox(height: 8),
                   Container(
@@ -194,7 +184,6 @@ class Detail extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Information
                   _buildSectionTitle('Information'),
                   const SizedBox(height: 8),
                   Container(
@@ -222,7 +211,6 @@ class Detail extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Studios & Producers
                   if (anime.studios != null || anime.producers != null) ...[
                     _buildSectionTitle('Studios & Producers'),
                     const SizedBox(height: 8),
@@ -238,7 +226,6 @@ class Detail extends StatelessWidget {
                     const SizedBox(height: 24),
                   ],
 
-                  // Genres
                   if (anime.genres.isNotEmpty) ...[
                     _buildSectionTitle('Genres'),
                     const SizedBox(height: 8),
@@ -247,7 +234,6 @@ class Detail extends StatelessWidget {
                   ],
                   const SizedBox(height: 24),
 
-                  // Themes
                   if (anime.themes != null && anime.themes!.isNotEmpty) ...[
                     _buildSectionTitle('Themes'),
                     const SizedBox(height: 8),

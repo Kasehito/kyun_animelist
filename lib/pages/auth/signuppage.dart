@@ -41,7 +41,6 @@ class SignUpPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  // Full Name Field
                   TextField(
                     controller: fullNameController,
                     decoration: InputDecoration(
@@ -57,7 +56,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // Username Field
                   TextField(
                     controller: usernameController,
                     decoration: InputDecoration(
@@ -73,7 +71,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // Email Field
                   TextField(
                     controller: emailController,
                     decoration: InputDecoration(
@@ -89,7 +86,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // Password Field
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -106,7 +102,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  // Sign Up Button
                   Obx(() => SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -140,7 +135,6 @@ class SignUpPage extends StatelessWidget {
                     ),
                   )),
                   const SizedBox(height: 20),
-                  // Login Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

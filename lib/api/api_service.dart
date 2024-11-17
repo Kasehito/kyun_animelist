@@ -63,7 +63,6 @@ class ApiService extends GetConnect {
   }) async {
     final Uri url = Uri.parse('$authBaseUrl/register-user');
     
-    // Menggunakan POST method dengan form data
     final response = await http.post(
       url,
       body: {

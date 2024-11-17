@@ -39,7 +39,6 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 children: [
-                  // Username Field
                   TextField(
                     controller: usernameController,
                     decoration: InputDecoration(
@@ -55,7 +54,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // Password Field
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -72,7 +70,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  // Forgot Password
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -81,7 +78,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // Login Button
                   Obx(() => SizedBox(
                         width: double.infinity,
                         height: 50,
@@ -114,7 +110,6 @@ class LoginPage extends StatelessWidget {
                         ),
                       )),
                   const SizedBox(height: 20),
-                  // Sign Up Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -37,18 +37,15 @@ class BottomNav extends StatelessWidget {
               ),
               actions: [
                 Obx(() {
-                  // Cek apakah halaman saat ini adalah Search
                   final isSearchPage = Get.currentRoute == '/search' ||
-                      controller.selectedIndex.value ==
-                          2; // Jika Search ada di index 2
+                      controller.selectedIndex.value == 2;
 
                   return isSearchPage
-                      ? const SizedBox() // Jika di Search page, tampilkan widget kosong
+                      ? const SizedBox()
                       : IconButton(
                           icon: const Icon(Icons.search, color: Colors.black87),
                           onPressed: () {
-                            controller
-                                .changeIndex(2); // Navigate ke Search page
+                            controller.changeIndex(2);
                           },
                         );
                 }),

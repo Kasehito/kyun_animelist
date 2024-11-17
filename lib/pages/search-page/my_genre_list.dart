@@ -14,7 +14,6 @@ class MyGenreList extends StatelessWidget {
 
     return Column(
       children: [
-        // Genre List
         SizedBox(
           height: 80,
           child: Obx(() {
@@ -43,8 +42,7 @@ class MyGenreList extends StatelessWidget {
             );
           }),
         ),
-
-        // Anime List by Genre
+  
         Expanded(
           child: Obx(() {
             if (genreController.isLoadingAnime.value &&

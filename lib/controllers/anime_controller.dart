@@ -4,7 +4,6 @@ import '../models/anime_model.dart';
 
 enum AnimeListType {
   top,
-  // recommend,
   // Bisa ditambah tipe lain seperti: upcoming, airing, dll
 }
 
@@ -15,7 +14,7 @@ class AnimeController extends GetxController {
   var isLoading = true.obs;
   var animeList = <AnimeModel>[].obs;
 
-  AnimeController({this.type = AnimeListType.top}); // Default ke top anime
+  AnimeController({this.type = AnimeListType.top});
 
   @override
   void onInit() {

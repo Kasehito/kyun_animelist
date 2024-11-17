@@ -22,7 +22,7 @@ class LoginController extends GetxController {
 
       if (response['status'] == true) {
         Get.snackbar('Success', 'Login successful!');
-        Get.offAllNamed('/bottomnav'); // Navigate to home after successful login
+        Get.offAllNamed('/bottomnav');
       } else {
         errorMessage.value = response['message'] ?? 'Login failed';
         Get.snackbar('Error', errorMessage.value);
