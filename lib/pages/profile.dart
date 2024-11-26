@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
+import '../pages/auth/edit_profile_page.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -38,23 +39,23 @@ class _ProfileState extends State<Profile> {
                   ),
                   const SizedBox(height: 10),
 
-                  const Text(
-                    'John Doe',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  Obx(() => Text(
+                        controller.fullName.value,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      )),
                   const SizedBox(height: 5),
                   // Username
-                  const Text(
-                    '@johndoe',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
-                  ),
+                  Obx(() => Text(
+                        '@${controller.username.value}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white70,
+                        ),
+                      )),
                   const SizedBox(height: 20),
                   // Stats Row
                   Row(
@@ -75,7 +76,7 @@ class _ProfileState extends State<Profile> {
                   _buildMenuItem(
                     icon: Icons.person_outline,
                     title: 'Edit Profile',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const EditProfilePage()),
                   ),
                   _buildMenuItem(
                     icon: Icons.settings_outlined,
