@@ -85,7 +85,6 @@ class MyGenreList extends StatelessWidget {
             );
           }),
         ),
-        // Loading Indicator untuk infinite scroll
         Obx(() => genreController.isLoadingAnime.value
             ? const Padding(
                 padding: EdgeInsets.all(8.0),

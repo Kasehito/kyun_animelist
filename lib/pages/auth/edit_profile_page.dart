@@ -18,7 +18,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Mengambil data dari controller
     fullNameController.text = controller.fullName.value;
     usernameController.text = controller.username.value;
     bioController.text = controller.bio.value;
@@ -42,7 +41,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Profile Picture
             Stack(
               alignment: Alignment.bottomRight,
               children: [
@@ -53,9 +51,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    // Implement image picker
-                  },
+                  onPressed: () {},
                   icon: const CircleAvatar(
                     backgroundColor: Colors.blue,
                     child: Icon(Icons.edit, color: Colors.white, size: 20),
@@ -65,7 +61,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             const SizedBox(height: 20),
             
-            // Form Fields
             TextField(
               controller: fullNameController,
               decoration: const InputDecoration(
@@ -94,19 +89,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             const SizedBox(height: 30),
             
-            // Save Button
             SizedBox(
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  // Update data di controller
                   controller.updateProfile(
                     fullName: fullNameController.text,
                     username: usernameController.text,
                     bio: bioController.text,
                   );
-                  Get.back(); // Kembali ke halaman profile
+                  Get.back();
                   Get.snackbar(
                     'Success',
                     'Profile updated successfully!',
