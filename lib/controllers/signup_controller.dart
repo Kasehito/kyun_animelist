@@ -1,36 +1,29 @@
 import 'package:get/get.dart';
-import '../api/api_service.dart';
+import 'package:flutter/material.dart';
+import 'package:kyun_animelist/api/auth_service.dart';
 
 class SignUpController extends GetxController {
-  final ApiService _apiService = ApiService();
-  
+  final AuthService authService = AuthService();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+
   final isLoading = false.obs;
   final errorMessage = ''.obs;
 
-  Future<void> registerUser({
-    required String username,
-    required String password,
-    required String fullName,
-    required String email,
-  }) async {
+  Future<void> registerUser() async {
+    final username = usernameController.text;
+    final password = passwordController.text;
+    final email = emailController.text;
+
     try {
       isLoading.value = true;
       errorMessage.value = '';
 
-      final response = await _apiService.registerUser(
-        username: username,
-        password: password,
-        fullName: fullName,
-        email: email,
-      );
+      await authService.signUpWithEmailPassword(email, password, username);
 
-      if (response['status'] == true) {
-        Get.snackbar('Success', 'Registration successful!');
-        Get.offAllNamed('/login');
-      } else {
-        errorMessage.value = response['message'] ?? 'Registration failed';
-        Get.snackbar('Error', errorMessage.value);
-      }
+      Get.snackbar('Success', 'Registration successful!');
+      Get.offAllNamed('/login');
     } catch (e) {
       errorMessage.value = e.toString();
       Get.snackbar('Error', errorMessage.value);
@@ -38,4 +31,4 @@ class SignUpController extends GetxController {
       isLoading.value = false;
     }
   }
-} 
+}

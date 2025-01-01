@@ -7,8 +7,6 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final LoginController controller = Get.put(LoginController());
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
-                    controller: usernameController,
+                    controller: controller.emailController,
                     decoration: InputDecoration(
                       hintText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline),
@@ -55,7 +53,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   TextField(
-                    controller: passwordController,
+                    controller: controller.passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -85,10 +83,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: controller.isLoading.value
                               ? null
                               : () {
-                                  controller.loginUser(
-                                    username: usernameController.text,
-                                    password: passwordController.text,
-                                  );
+                                  controller.login();
                                 },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,

@@ -12,8 +12,9 @@ class AuthService {
 
   //Sign up with email and password
   Future<AuthResponse> signUpWithEmailPassword(
-      String email, String password) async {
-    return await supabase.auth.signUp(email: email, password: password);
+      String email, String password, String username) async {
+    return await supabase.auth
+        .signUp(email: email, password: password, data: {'username': username});
   }
 
   //Sign out
@@ -21,9 +22,18 @@ class AuthService {
     await supabase.auth.signOut();
   }
 
-  //Get current user
-  User? getCurrentUser() {
-    return supabase.auth.currentUser;
+  //Get current user email
+  String? getCurrentUserEmail() {
+    final session = supabase.auth.currentSession;
+    final user = session?.user;
+    return user?.email;
+  }
+
+  //Get current user username
+  String? getCurrentUsername() {
+    final session = supabase.auth.currentSession;
+    final user = session?.user;
+    return user?.userMetadata?['username'];
   }
 
   //Reset password
@@ -33,8 +43,9 @@ class AuthService {
 
   //Update user profile
   Future<void> updateUserProfile(
-      {String? fullName, String? username, String? website}) async {
-    await supabase.auth.updateUser(UserAttributes(
-        data: {'full_name': fullName, 'username': username, 'website': website}));
+      {String? username,}) async {
+    await supabase.auth.updateUser(UserAttributes(data: {
+      'username': username,
+    }));
   }
 }

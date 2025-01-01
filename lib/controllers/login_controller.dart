@@ -1,32 +1,27 @@
 import 'package:get/get.dart';
-import '../api/api_service.dart';
+import 'package:flutter/material.dart';
+import 'package:kyun_animelist/api/auth_service.dart';
+
 
 class LoginController extends GetxController {
-  final ApiService _apiService = ApiService();
-  
+  final AuthService authService = AuthService();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   final isLoading = false.obs;
   final errorMessage = ''.obs;
 
-  Future<void> loginUser({
-    required String username,
-    required String password,
-  }) async {
+  void login() async {
+    final email = emailController.text;
+    final password = passwordController.text;
+
     try {
       isLoading.value = true;
       errorMessage.value = '';
 
-      final response = await _apiService.loginUser(
-        username: username,
-        password: password,
-      );
-
-      if (response['status'] == true) {
-        Get.snackbar('Success', 'Login successful!');
-        Get.offAllNamed('/bottomnav');
-      } else {
-        errorMessage.value = response['message'] ?? 'Login failed';
-        Get.snackbar('Error', errorMessage.value);
-      }
+      await authService.signInWithEmailPassword(email, password);
+      // Navigasi sekarang dikelola oleh AuthGate, jadi tidak perlu Get.offAllNamed('/bottomnav') di sini.
+      Get.snackbar('Success', 'Login successful!');
     } catch (e) {
       errorMessage.value = e.toString();
       Get.snackbar('Error', errorMessage.value);
@@ -34,4 +29,4 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
-} 
+}

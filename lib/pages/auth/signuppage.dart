@@ -7,10 +7,6 @@ class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
 
   final SignUpController controller = Get.put(SignUpController());
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +38,7 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
-                    controller: fullNameController,
-                    decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      prefixIcon: const Icon(Icons.person),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: usernameController,
+                    controller: controller.usernameController,
                     decoration: InputDecoration(
                       hintText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline),
@@ -72,7 +53,7 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   TextField(
-                    controller: emailController,
+                    controller: controller.emailController,
                     decoration: InputDecoration(
                       hintText: 'Email',
                       prefixIcon: const Icon(Icons.email_outlined),
@@ -87,7 +68,7 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   TextField(
-                    controller: passwordController,
+                    controller: controller.passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -103,37 +84,33 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   Obx(() => SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: controller.isLoading.value
-                          ? null
-                          : () {
-                              controller.registerUser(
-                                username: usernameController.text,
-                                password: passwordController.text,
-                                fullName: fullNameController.text,
-                                email: emailController.text,
-                              );
-                            },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: controller.isLoading.value
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () {
+                                  controller.registerUser();
+                                },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                    ),
-                  )),
+                          ),
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white)
+                              : const Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
+                      )),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
