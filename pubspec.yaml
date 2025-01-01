@@ -13,7 +13,8 @@ dependencies:
   flutter_svg: ^1.1.1
   http: ^0.13.5
   cached_network_image: ^3.2.2
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.3.4
+  supabase_flutter: ^2.8.2
 
 dev_dependencies:
   flutter_test:
